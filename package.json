@@ -1,0 +1,29 @@
+{
+  "name": "rest-hapi",
+  "version": "0.0.1",
+  "description": "REST API application with Express, Mongoskin, MongoDB, Mocha and Superagent",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test -R spec"
+  },
+  "author": "Hong Kim",
+  "license": "BSD",
+  "dependencies": {
+    "good": "6.2.0",
+    "hapi": "8.8.x",
+    "googleapis": "2.0.6",
+    "jade": "*",
+    "log4js": "0.6.26",
+    "handlebars": "1.0.x",
+    "util": "*",
+    "mongoskin": "1.4.13"
+  },
+  "devDependencies": {
+    "mocha": "2.2.5",
+    "superagent": "0.15.7",
+    "expect.js": "0.3.1"
+  }
+}
