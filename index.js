@@ -10,8 +10,11 @@ var Hapi = require('hapi'),
 
 var config = {};
 var port0 = process.env.PORT || 3000;
+
 var server = new Hapi.Server(config);
-    server.connection({ host: 'localhost', port: port0 });
+var hostconf = { host: 'localhost', port: port0 };
+
+server.connection({ port: port0 });
 
 var db = mongoskin.db('mongodb://@localhost:27017/test', {safe:true})
 var id = mongoskin.helper.toObjectID
