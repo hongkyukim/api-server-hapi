@@ -9,8 +9,9 @@ var Hapi = require('hapi'),
   logger = require('./utils/logger')
 
 var config = {};
+var port0 = process.env.PORT || 3000;
 var server = new Hapi.Server(config);
-    server.connection({ host: 'localhost', port: process.env.PORT || 3000 });
+    server.connection({ host: 'localhost', port: port0 });
 
 var db = mongoskin.db('mongodb://@localhost:27017/test', {safe:true})
 var id = mongoskin.helper.toObjectID
@@ -190,4 +191,4 @@ var options = {
 //});
 
 server.start()
-console.log('Hapi server started on ...');
+console.log('Hapi server started on ...port '+ port0);
