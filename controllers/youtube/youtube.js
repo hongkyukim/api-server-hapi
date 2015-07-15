@@ -42,35 +42,51 @@ function getSearchVideoList(results, callback) {
         response.on('end', function() {
 
             // Data reception is done, do whatever with it!
-            var parsed = JSON.parse(body);
+            //var parsed = JSON.parse(body);
             //logger.logInfo('=======yt parsed: '+parsed);
-            callback(parsed);
+            callback(body);
         });
+    }).on('error', function(e) {
+      console.log("Got error: ", e);
+      callback(e);
     });
 
 }
 
-
-exports.youtubesearch = function() {
+function youtubesearch(callback) {
 	logger.logInfo('===========================yt search');
 	//urlshortener.url.get({ shortUrl: 'http://goo.gl/xKbRu3', auth: API_KEY });
 	var results = youtube.search.list({ part: 'id,snippet', 
 		                                q: 'hapi node',
 		                                maxResults: 3 });
 
-    logger.logInfo('=====yt: '+util.inspect(results.url));
+    //logger.logInfo('=====yt: '+util.inspect(results.url));
 
 	getSearchVideoList(results.url, function(output) {
         //var output0 = JSON.parse(output);
-	     //logger.logInfo('=====================yt href: '+results.url.href);
+	    logger.logInfo('====yt output: '+output);
 	    for(var i in output.items) {
 	         var item = output.items[i];
 	         logger.logInfo('id: '+item.id.videoId+' title: '+item.snippet.title);
 	         //logger.logInfo('[%s] Title: %s', item.id.videoId, item.snippet.title);
 	    }
-
+        callback(output);
 	});
 
 
 
 } 
+
+exports.videosearch = function(req, reply) {
+        console.log('==yt===1==');
+        
+        var locals = {
+            title: 'This is my sample app'
+        };
+        youtubesearch(function(results) {
+            //console.log('==yt==2==results: '+results);
+            //reply.view('index', locals);
+            //reply.render('index.jade', locals);
+            reply(results);
+         });
+    }

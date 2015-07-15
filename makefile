@@ -7,4 +7,4 @@ build:
 	rm -rf node_modules
 	npm install
 run:
-	node hapi-app.js
+	node index.js
