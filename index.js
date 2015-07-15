@@ -1,12 +1,9 @@
 var util = require('util');
 var Hapi = require('hapi'),
-  //server = hapi.createServer('localhost', 3000),
-  
-
   auth = require('./controllers/auth/auth'),
   oauth2 = require('./controllers/googleapis/oauth2'),
   apikeys = require('./controllers/googleapis/api_keys'),
-  youtube = require('./controllers/youtube/youtube.js'),
+  videosearch = require('./controllers/videosearch.js'),
   collect = require('./controllers/collections/collections.js'),
   logger = require('./utils/logger')
 
@@ -25,9 +22,8 @@ server.route([
     method: 'GET',
     path: '/oauth2',
     handler: function(req, reply) {
-      logger.logInfo('====oauth2=======1==');
         var url = oauth2.dotest();
-      logger.logInfo('====oauth2= url: '+url);
+        //logger.logInfo('====oauth2= url: '+url);
         reply.redirect(url);
     }
   },
@@ -40,34 +36,27 @@ server.route([
     method: 'GET',
     path: '/urlshortener',
     handler: function(req, reply) {
-        console.log('================================================1==');
         apikeys.urlshortener();
         var locals = {
             title: 'This is my sample app'
         };
-        console.log('===============================================2==');
-        //reply.view('index', locals);
-        //reply.render('index.jade', locals);
         reply({msg: 'auth success'});
     }
   },
+    // video search using youtube, vevo,...
     {
     method: 'GET',
-    path: '/youtubesearch',
-    handler: youtube.videosearch
+    path: '/videosearch',
+    handler: videosearch.videosearch
   },
     {
     method: 'GET',
     path: '/auth',
     handler: function(req, reply) {
-        console.log('================================================1==');
         //auth.googleApiClientReady();
         var locals = {
             title: 'This is my sample app'
         };
-        console.log('===============================================2==');
-        //reply.view('index', locals);
-        //reply.render('index.jade', locals);
         reply({msg: 'auth success'});
     }
   }
